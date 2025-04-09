@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Admin Panel - Add Product</h1>
+    <a href="/">Back to Home</a>
+    <a href="/">Logout</a>
+    <form id="product-form">
+        <input type="text" id="name" placeholder="Product Name" required>
+        <input type="number" id="price" placeholder="Price" required>
+        <input type="text" id="image" placeholder="Image URL" required>
+        <button type="submit">Add Product</button>
+    </form>
+    
+    <script>
+        document.getElementById('product-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const price = document.getElementById('price').value;
+            const image = document.getElementById('image').value;
+            
+            const response = await fetch('/add_product', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, price, image })
+            });
+            
+            if (response.ok) {
+                alert('Product added successfully!');
+                document.getElementById('product-form').reset();
+            }
+        });
+    </script>
+</body>
+</html>
